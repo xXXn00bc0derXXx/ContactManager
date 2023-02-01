@@ -12,7 +12,7 @@ function doSignUp(){
 	let fName = document.getElementById("firstNameSign").value;
 	let lName = document.getElementById("lastNameSign").value;
 	let loginSign = document.getElementById("loginSign").value;
-	let passwordSign = document.getElementById("loginPasswordSign");
+	let passwordSign = document.getElementById("loginPasswordSign").value;
 
 //	var hash = md5( password );
 	
