@@ -4,6 +4,39 @@ const extension = 'php';
 let userId = 0;
 let firstName = "";
 let lastName = "";
+function updateContact(updateParam)
+{
+	/*let newName = document.getElementById("contactName").value;
+	let newPhone = document.getElementById("contactPhone").value;
+	let newEmail = document.getElementById("contactEmail").value;
+	*/
+	document.getElementById("colorAddResult").innerHTML = "";
+	window.location.href = "edit.html";
+	console.log(updateParam);
+	let tmp = {contactID:updateParam,userId:userId};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + 'LAMPAPI/UpdateContact.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("colorAddResult").innerHTML = err.message;
+	}
+}
 function searchContact()
 {
 	let srch = document.getElementById("searchText").value;
@@ -30,7 +63,8 @@ function searchContact()
 				
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					colorList += jsonObject.results[i];
+					colorList += jsonObject.results[i] + " <button type='button' onclick = 'updateContact("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button'>Delete</button>";
+					console.log(jsonObject.id[i]);
 					if( i < jsonObject.results.length - 1 )
 					{
 						colorList += "<br />\r\n";
@@ -47,11 +81,12 @@ function searchContact()
 		document.getElementById("colorSearchResult").innerHTML = err.message;
 	}
 }
+
 function addContact()
 {
 	/*contactName" placeholder="Contact Name">
     	<input type="text" id="contactPhone" placeholder="Contact Phone">
-    	<input type="text" id="contactEmail*/
+    	//<input type="text" id="contactEmail*/
 	let newName = document.getElementById("contactName").value;
 	let newPhone = document.getElementById("contactPhone").value;
 	let newEmail = document.getElementById("contactEmail").value;
@@ -135,6 +170,7 @@ function doSignUp(){
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
 }
+
 function doLogin()
 {
 	userId = 0;
