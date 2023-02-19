@@ -1,11 +1,8 @@
 <?php
 	$inData = getRequestInfo();
 	
-	$contactName = $inData["editName"];
-    	$contactPhone =$inData["editPhone"];
-    	$contactEmail = $inData["editEmail"];
+	$dID = $inData["deleteID"];
 	$userId = $inData["userId"];
-    	$changeId = $inData["cUserID"];
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 	if ($conn->connect_error) 
@@ -14,8 +11,8 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("UPDATE Contacts SET Name = ?, Phone = ?, Email=? WHERE userID = ? AND ID = ?");
-		$stmt->bind_param("sssss", $contactName, $contactPhone,$contactEmail,$userId,$changeId);
+		$stmt = $conn->prepare("DELETE FROM Contacts WHERE UserId = ? AND ID = ?");
+		$stmt->bind_param("ss", $userId, $dID);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();

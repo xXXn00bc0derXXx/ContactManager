@@ -2,30 +2,23 @@ const urlBase = 'http://159.223.96.127/';
 const extension = 'php';
 
 let userId = 0;
+let changeUserID = 0;
 let firstName = "";
 let lastName = "";
-function updateContact(updateParam)
+function deleteContact(deleteParam)
 {
-	/*let newName = document.getElementById("contactName").value;
-	let newPhone = document.getElementById("contactPhone").value;
-	let newEmail = document.getElementById("contactEmail").value;
-	*/
-	document.getElementById("colorAddResult").innerHTML = "";
-	window.location.href = "edit.html";
-	console.log(updateParam);
-	let tmp = {contactID:updateParam,userId:userId};
-	let jsonPayload = JSON.stringify( tmp );
-
-	let url = urlBase + 'LAMPAPI/UpdateContact.' + extension;
+	let tmp = {userId:userId,deleteID:deleteParam};
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + 'LAMPAPI/DeleteContact.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
-		xhr.onreadystatechange = function()
+		xhr.onreadystatechange = function() 
 		{
-			if (this.readyState == 4 && this.status == 200)
+			if (this.readyState == 4 && this.status == 200) 
 			{
 				document.getElementById("colorAddResult").innerHTML = "Color has been added";
 			}
@@ -36,6 +29,47 @@ function updateContact(updateParam)
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
+}
+function editContact()
+{
+	/*  <input type="text" id="editName" placeholder="Contact Name">
+    	<input type="text" id="editPhone" placeholder="Contact Phone">
+    	<input type="text" id="editEmail" placeholder="E-mail"> 
+	*/
+	let eName = document.getElementById("editName").value;
+	let ePhone = document.getElementById("editPhone").value;
+	let eEmail = document.getElementById("editEmail").value;
+	changeUserID = Number(localStorage.getItem("cId"));
+	let tmp = {cUserID:changeUserID, userId:userId, editName:eName, editPhone:ePhone,editEmail:eEmail};
+
+	let jsonPayload = JSON.stringify(tmp);
+	console.log(jsonPayload);
+	let url = urlBase + 'LAMPAPI/UpdateContact.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("colorAddResult").innerHTML = err.message;
+	}
+}
+function goToEdit(updateParam)
+{
+	window.location.href = "edit.html";
+	localStorage.setItem("cId", JSON.stringify(updateParam));
 }
 function searchContact()
 {
@@ -63,8 +97,8 @@ function searchContact()
 				
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					colorList += jsonObject.results[i] + " <button type='button' onclick = 'updateContact("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button'>Delete</button>";
-					console.log(jsonObject.id[i]);
+					colorList += jsonObject.results[i] + " <button type='button' onclick = 'goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+")'>Delete</button>";
+					//console.log(jsonObject.id[i]);
 					if( i < jsonObject.results.length - 1 )
 					{
 						colorList += "<br />\r\n";
@@ -229,7 +263,7 @@ function saveCookie()
 	let minutes = 20;
 	let date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId +",changeUserID= " + changeUserID + ";expires=" + date.toGMTString();
 }
 
 function readCookie()
@@ -253,6 +287,11 @@ function readCookie()
 		{
 			userId = parseInt( tokens[1].trim() );
 		}
+		/*else if(tokens[0] == "changeUserID")
+		{
+			changeUserID = parseInt( tokens[1].trim() );
+		}
+		*/
 	}
 	
 	if( userId < 0 )
