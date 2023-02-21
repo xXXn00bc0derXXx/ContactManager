@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Contact Manager</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="img/icons8-phone-50.png" type="image/jpg/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" 
+    rel="stylesheet"  type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() 
+        {
+            readCookie();
+        }, false);
+    </script>
+</head>
+
+<body>
+    <div id="bodystyle">
+        <h1>Contact Manager</h1>
+        <div id="loggedInDiv">
+            <span id="userName"></span><br>
+            <button type="button" id="logoutButton" class="button" onclick="doLogout();">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> &nbsp;Log Out
+            </button>
+        </div>
+
+        <div id="accessUIDiv">
+            <br>
+            <div>
+                <input type="text" id="searchText" placeholder="Contact To Search For"/>
+                <button type="button" id="searchColorButton" class="button" onclick="searchContact();">
+                    <i class="fa-solid fa-magnifying-glass"></i> &nbsp;Search Contact 
+                </button><br>
+            </div>
+            <span id="colorSearchResult"></span>
+            <p id="colorList">
+            </p><br><br>
+        
+            <div>
+                <input type="text" id="contactName" placeholder="Contact Name">
+                <input type="text" id="contactPhone" placeholder="Contact Phone">
+                <input type="text" id="contactEmail" placeholder="E-mail">
+                <button type="button" id="addColorButton" class="button" onclick="addContact();">
+                    <i class="fa-solid fa-user-plus"></i> &nbsp;Add Contact
+                </button><br />
+            </div>
+            <span id="colorAddResult"></span>
+        </div>  
+    </div>
+    
+</body>
+
+</html>
