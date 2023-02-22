@@ -75,6 +75,7 @@ function searchContact()
 {
 	let srch = document.getElementById("searchText").value;
 	document.getElementById("colorSearchResult").innerHTML = "";
+	document.getElementById("colorlist").innerHTML = "";
 	
 	let colorList = "";
 
