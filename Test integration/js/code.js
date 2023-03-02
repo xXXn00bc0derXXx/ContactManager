@@ -56,18 +56,15 @@ function editContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				//document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				document.getElementById("colorAddResult").innerHTML = "Color has been added";
 			}
 		};
 		xhr.send(jsonPayload);
-		window.location.href= "contact.html";
 	}
 	catch(err)
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
-		window.location.href = "contact.html";
 	}
-	window.location.href = "contact.html";
 }
 function goToEdit(updateParam)
 {
@@ -78,7 +75,7 @@ function searchContact()
 {
 	let srch = document.getElementById("searchText").value;
 	document.getElementById("colorSearchResult").innerHTML = "";
-	document.getElementById("colorList").innerHTML = "";
+	
 	let colorList = "";
 
 	let tmp = {search:srch,userId:userId};
