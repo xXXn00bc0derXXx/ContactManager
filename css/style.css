@@ -1,53 +1,44 @@
-/* body {
-  margin: 0;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  background-color: cornflowerblue;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  border-bottom: solid 2px black;
-}
-li a {
-  display: block;
-  padding: 14px 16px;
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  text-align: center;
-}
-li {
-  float: left;
-} */
-
-#rightalign {
-  float: right
-}
-
-/* li a.active {
-  background-color: #04AA6D;
-  color: white;
-}
-li a:hover:not(.active) {
-  background-color: #845600;
-  color:white;
-}
-*/
 h1 {
-  background-color: cornflowerblue;
+  background-color: #487480;
   color:rgb(255, 255, 255);
   padding: 7px;
-  box-shadow: 0px 3px 10px black;
+  box-shadow: 0px 2px 10px black;
+  border-radius: 4px;
+  border-bottom: 2px solid #c4ffff;
+  text-align: center;
 }
 
-#bodystyle {
+body {
+  font-family: Arial, Helvetica, sans-serif;
   padding:20px;
   margin-top:0px;
-  background-color:#fff0d2;
-  height:1500px;
+  background-color:#f5fcfe;
+}
+
+label {
+  font-size: 16px;
+}
+
+input {
+  box-shadow: 0 0 1px black;
+  border-radius: 10px;
+}
+
+hr {
+  height: 2px;
+  background-color: #54caed;
+  border: none;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+  box-shadow: 0px 0px 2px black;
 }
 
 .navbar-toggler {
