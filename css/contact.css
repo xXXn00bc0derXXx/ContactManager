@@ -117,12 +117,22 @@ button:hover {
   opacity: 0.7;
 }
 
-input[type=text] {
+input {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
+}
+
+.invalid {
+  font-size: medium;
+  color: #f44336;
+  text-decoration: underline;
+}
+
+input.invalidBorder {
+  border: 3px solid red;
 }
 
 #mobileSep {
