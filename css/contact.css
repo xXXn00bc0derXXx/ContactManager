@@ -106,6 +106,7 @@ input:checked + .slider:before {
   background-color: #ba3200;
   float: right;
   margin-bottom: 0px;
+  margin-left: 5px;
 }
 
 #cancelButton {
@@ -163,6 +164,7 @@ input[type=text] {
   #logoutButton {
     float: none;
     width: 100%;
+    margin-left: 0px;
   }
   #loggedInDiv {
     float: none;
