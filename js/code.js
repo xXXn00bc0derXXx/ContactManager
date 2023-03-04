@@ -5,6 +5,68 @@ let userId = 0;
 let changeUserID = 0;
 let firstName = "";
 let lastName = "";
+let darkModeOn = 0;
+let editCache = [];
+let editCookie = "";
+
+function isDarkModeOn() {
+	if (darkModeOn == 1) {
+		document.getElementById("darkMode").click();
+		darkModeOn = 1;
+	}
+	else {
+		darkModeOn = 0;
+	}
+}
+function darkMode() {
+	let element1 = document.body;
+		element1.classList.toggle("dark-mode");
+		let element2;
+
+		var path = window.location.pathname;
+		var page = path.split("/").pop();
+		if (page == "contact.html") {
+					element2 = document.getElementById("searchText");
+					element2.classList.toggle("inputDarkMode");
+					element2 = document.getElementById("contactName");
+					element2.classList.toggle("inputDarkMode");
+					element2 = document.getElementById("contactPhone");
+					element2.classList.toggle("inputDarkMode");
+					element2 = document.getElementById("contactEmail");
+					element2.classList.toggle("inputDarkMode");
+				}
+		else if (page == "index.html") {
+					element2 = document.getElementById("loginName");
+					element2.classList.toggle("inputDarkMode");
+					element2 = document.getElementById("loginPassword");
+					element2.classList.toggle("inputDarkMode");
+				}
+		else if (page == "signUp.html") {
+						element2 = document.getElementById("firstNameSign");
+						element2.classList.toggle("inputDarkMode");
+						element2 = document.getElementById("lastNameSign");
+						element2.classList.toggle("inputDarkMode");
+						element2 = document.getElementById("loginSign");
+						element2.classList.toggle("inputDarkMode");
+						element2 = document.getElementById("loginPasswordSign");
+						element2.classList.toggle("inputDarkMode");
+					}
+			else if (page == "edit.html") {
+							element2 = document.getElementById("editName");
+							element2.classList.toggle("inputDarkMode");
+							element2 = document.getElementById("editPhone");
+							element2.classList.toggle("inputDarkMode");
+							element2 = document.getElementById("editEmail");
+							element2.classList.toggle("inputDarkMode");
+						}
+		if (darkModeOn == 0) {
+					darkModeOn = 1;
+				}
+		else if (darkModeOn == 1) {
+					darkModeOn = 0;
+				}
+}
+
 function deleteContact(deleteParam)
 {
 	let tmp = {userId:userId,deleteID:deleteParam};
@@ -43,7 +105,6 @@ function editContact()
 	let tmp = {cUserID:changeUserID, userId:userId, editName:eName, editPhone:ePhone,editEmail:eEmail};
 
 	let jsonPayload = JSON.stringify(tmp);
-	console.log(jsonPayload);
 	let url = urlBase + 'LAMPAPI/UpdateContact.' + extension;
 
 	let xhr = new XMLHttpRequest();
@@ -59,20 +120,57 @@ function editContact()
 				//document.getElementById("colorAddResult").innerHTML = "Color has been added";
 			}
 		};
+		window.location.href ="contact.html";
 		xhr.send(jsonPayload);
-		window.location.href= "contact.html";
+		//window.location.href= "contact.html";
 	}
 	catch(err)
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 		window.location.href = "contact.html";
 	}
-	window.location.href = "contact.html";
 }
 function goToEdit(updateParam)
 {
 	window.location.href = "edit.html";
 	localStorage.setItem("cId", JSON.stringify(updateParam));
+}
+function editCacheCookie(i)
+{
+	editCookie = editCache[i];
+	saveCookie();
+}
+function inputEditData()
+{
+	let i = 0;
+	console.log(editCookie);
+	let tmp = editCookie.split(" ");
+	console.log(tmp);
+	while (i < tmp.length) {
+		if (tmp[i] === "") {
+			tmp.splice(i, 1);
+		}
+		else {
+			++i;
+		}
+	}
+	console.log(tmp);
+	let element1 = document.getElementById("editEmail");
+	if(tmp.length >= 3) {
+		element1.value = tmp.pop();
+        	element1 = document.getElementById("editPhone");
+		element1.value = tmp.pop();
+	}
+	element1 = document.getElementById("editName");
+	let tmp2 = "";
+	for (let i = 0; i < tmp.length; i++)
+	{
+		tmp2 += tmp[i];
+		if (i + 1 < tmp.length) {
+			tmp2 += " ";
+		}
+	}
+	element1.value = tmp2;
 }
 function searchContact()
 {
@@ -97,11 +195,10 @@ function searchContact()
 			{
 				document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
 				let jsonObject = JSON.parse( xhr.responseText );
-				
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					colorList += jsonObject.results[i] + " <button type='button' onclick = 'goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+")'>Delete</button>";
-					//console.log(jsonObject.id[i]);
+					colorList += jsonObject.results[i] + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+")'>Delete</button>";
+					editCache[i] = jsonObject.results[i];
 					if( i < jsonObject.results.length - 1 )
 					{
 						colorList += "<br />\r\n";
@@ -261,12 +358,34 @@ function doLogin()
 
 }
 
+/*function saveDMCookie()
+{
+	        let minutes = 20;
+	        let date = new Date();
+	        date.setTime(date.getTime()+(minutes*60*1000));
+	        document.cookie = ",darkMode=" + darkModeOn + ";expires=" + date.toGMTString();
+}*/
+function readDMCookie()
+{
+	let data = document.cookie;
+	        let splits = data.split(",");
+	        for(var i = 0; i < splits.length; i++)
+		        {
+				                let thisOne = splits[i].trim();
+				                let tokens = thisOne.split("=");
+				                if( tokens[0] == "darkMode" )
+					                {
+								                        darkModeOn = parseInt(tokens[1].trim());
+								                }
+
+			}
+}
 function saveCookie()
 {
 	let minutes = 20;
 	let date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId +",changeUserID= " + changeUserID + ";expires=" + date.toGMTString();
+	document.cookie = "darkMode=" + darkModeOn + ",firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ",changeUserID= " + changeUserID + ",editCookie=" + editCookie + ";expires=" + date.toGMTString();
 }
 
 function readCookie()
@@ -290,13 +409,20 @@ function readCookie()
 		{
 			userId = parseInt( tokens[1].trim() );
 		}
+		else if( tokens[0] == "darkMode" )
+		{
+			darkModeOn = parseInt( tokens[1].trim() );
+		}
+		else if(tokens[0] == "editCookie")
+		{
+			editCookie = tokens[1];
+		}
 		/*else if(tokens[0] == "changeUserID")
 		{
 			changeUserID = parseInt( tokens[1].trim() );
 		}
 		*/
 	}
-	
 	if( userId < 0 )
 	{
 		window.location.href = "index.html";
@@ -312,7 +438,10 @@ function doLogout()
 	userId = 0;
 	firstName = "";
 	lastName = "";
+	darkModeOn = 0;
+	editCookie = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+ 	document.cookie = "darkMode= 0; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 	window.location.href = "index.html";
 }
 

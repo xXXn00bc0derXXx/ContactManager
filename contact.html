@@ -16,19 +16,9 @@
         document.addEventListener('DOMContentLoaded', function() 
         {
             readCookie();
+	    console.log(document.cookie);
+	    isDarkModeOn();
         }, false);
-        function darkMode() {
-            let element1 = document.body;
-            element1.classList.toggle("dark-mode");
-            let element2 = document.getElementById("searchText");
-            element2.classList.toggle("inputDarkMode");
-            element2 = document.getElementById("contactName");
-            element2.classList.toggle("inputDarkMode");
-            element2 = document.getElementById("contactPhone");
-            element2.classList.toggle("inputDarkMode");
-            element2 = document.getElementById("contactEmail");
-            element2.classList.toggle("inputDarkMode");
-        }
     </script>
 </head>
 
@@ -41,7 +31,7 @@
         </button>
         <div class="switch">
             <label id="sliderLabel">
-                <input type="checkbox" id="darkMode" onclick="darkMode()">
+                <input type="checkbox" id="darkMode" onclick="darkMode();">
                 <span class="slider">
                     <div class="darkModeIcons">
                         <div class="moon">
