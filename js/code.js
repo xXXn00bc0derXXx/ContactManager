@@ -8,6 +8,25 @@ let lastName = "";
 let darkModeOn = 0;
 let editCache = [];
 let editCookie = "";
+let invalidInput = [];
+
+document.addEventListener('DOMContentLoaded', function() 
+	{
+			var path = window.location.pathname;
+			var page = path.split("/").pop();
+			if (page == "contact.html") {
+						invalidInput = [0, 0, 0];
+					}
+			else if (page == "index.html") {
+						invalidInput = [0, 0];
+					}
+			else if (page == "signUp.html") {
+						invalidInput = [0, 0, 0, 0];
+					}
+			else if (page == "edit.html") {
+						invalidInput = [0, 0, 0];
+					}
+	});
 
 function isDarkModeOn() {
 	if (darkModeOn == 1) {
@@ -102,6 +121,7 @@ function deleteContact(deleteParam)
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
+		document.getElementById("searchColorButton").click();
 }
 function editContact()
 {
@@ -112,6 +132,92 @@ function editContact()
 	let eName = document.getElementById("editName").value;
 	let ePhone = document.getElementById("editPhone").value;
 	let eEmail = document.getElementById("editEmail").value;
+	
+	let element1;
+		if ((eName == null || eName == "") || (ePhone == null || ePhone == "") || (eEmail == null || eEmail == ""))
+			{
+						document.getElementById("colorAddResult").innerHTML = "Name/Phone/Email cannot be empty";
+						if (eName == null || eName == "")
+							{
+											if (invalidInput[0] == 0) {
+																element1 = document.getElementById("editName");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[0] = 1;
+															}
+										}
+						else if (invalidInput[0] == 1) {
+										element1 = document.getElementById("editName");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[0] = 0;
+									}
+						if (ePhone == null || ePhone == "")
+							{
+											if (invalidInput[1] == 0) {
+																element1 = document.getElementById("editPhone");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[1] = 1;
+															}
+										}
+						else if (invalidInput[1] == 1) {
+										element1 = document.getElementById("editPhone");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[1] = 0;
+									}
+						if (eEmail == null || eEmail == "")
+							{
+											if (invalidInput[2] == 0) {
+																element1 = document.getElementById("editEmail");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[2] = 1;
+															}
+										}
+						else if (invalidInput[2] == 1) {
+										element1 = document.getElementById("editEmail");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[2] = 0;
+									}
+						return;
+					}
+
+		if (invalidInput[0] == 1) {
+					element1 = document.getElementById("editName");
+					element1.classList.toggle("invalidBorder");
+					invalidInput[0] = 0;
+				}
+		if (invalidInput[1] == 1) {
+					element1 = document.getElementById("editPhone");
+					element1.classList.toggle("invalidBorder");
+					invalidInput[1] = 0;
+				}
+		if (invalidInput[2] == 1) {
+					element1 = document.getElementById("editEmail");
+					element1.classList.toggle("invalidBorder");
+					invalidInput[2] = 0;
+				}
+		
+		if (isNaN(ePhone))
+			{
+						document.getElementById("colorAddResult").innerHTML = "Phone number must only contain digits";
+						if (invalidInput[1] == 0) {
+										element1 = document.getElementById("editPhone");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[1] = 1;
+									}
+						return;
+					}
+
+		var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!regex.test(eEmail))
+			{
+						document.getElementById("colorAddResult").innerHTML = "Invalid email format";
+						if (invalidInput[2] == 0) {
+										element1 = document.getElementById("editEmail");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[2] = 1;
+									}
+						return;
+					}
+
 	changeUserID = Number(localStorage.getItem("cId"));
 	let tmp = {cUserID:changeUserID, userId:userId, editName:eName, editPhone:ePhone,editEmail:eEmail};
 
@@ -237,6 +343,92 @@ function addContact()
 	let newEmail = document.getElementById("contactEmail").value;
 	document.getElementById("colorAddResult").innerHTML = "";
 
+	let element1;
+		if ((newName == null || newName == "") || (newPhone == null || newPhone == "") || (newEmail == null || newEmail == ""))
+			{
+						document.getElementById("colorAddResult").innerHTML = "Name/Phone/Email cannot be empty";
+						if (newName == null || newName == "")
+							{
+											if (invalidInput[0] == 0) {
+																element1 = document.getElementById("contactName");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[0] = 1;
+															}
+										}
+						else if (invalidInput[0] == 1) {
+										element1 = document.getElementById("contactName");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[0] = 0;
+									}
+						if (newPhone == null || newPhone == "")
+							{
+											if (invalidInput[1] == 0) {
+																element1 = document.getElementById("contactPhone");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[1] = 1;
+															}
+										}
+						else if (invalidInput[1] == 1) {
+										element1 = document.getElementById("contactPhone");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[1] = 0;
+									}
+						if (newEmail == null || newEmail == "")
+							{
+											if (invalidInput[2] == 0) {
+																element1 = document.getElementById("contactEmail");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[2] = 1;
+															}
+										}
+						else if (invalidInput[2] == 1) {
+										element1 = document.getElementById("contactEmail");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[2] = 0;
+									}
+						return;
+					}
+
+	if (invalidInput[0] == 1) {
+				element1 = document.getElementById("contactName");
+				element1.classList.toggle("invalidBorder");
+				invalidInput[0] = 0;
+			}
+		if (invalidInput[1] == 1) {
+					element1 = document.getElementById("contactPhone");
+					element1.classList.toggle("invalidBorder");
+					invalidInput[1] = 0;
+				}
+		if (invalidInput[2] == 1) {
+					element1 = document.getElementById("contactEmail");
+					element1.classList.toggle("invalidBorder");
+					invalidInput[2] = 0;
+				}
+
+		if (isNaN(newPhone))
+			{
+				
+				document.getElementById("colorAddResult").innerHTML = "Phone number must only contain digits";
+						if (invalidInput[1] == 0) {
+										element1 = document.getElementById("contactPhone");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[1] = 1;
+									}
+						return;
+					}
+
+	var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!regex.test(newEmail))
+			{
+						document.getElementById("colorAddResult").innerHTML = "Invalid email format";
+						if (invalidInput[2] == 0) {
+										element1 = document.getElementById("contactEmail");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[2] = 1;
+									}
+						return;
+					}
+
 	//let tmp = {color:newColor,userId,userId};
 	let tmp = {contactName:newName,contactPhone:newPhone,contactEmail:newEmail,userId:userId}
 	let jsonPayload = JSON.stringify( tmp );
@@ -324,6 +516,50 @@ function doLogin()
 	
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
+
+let element1;
+		if ((login == null || login == "") || (password == null || password == ""))
+			{
+						document.getElementById("loginResult").innerHTML = "User/Password cannot be empty";
+						if (login == null || login == "")
+							{
+											if (invalidInput[0] == 0) {
+																element1 = document.getElementById("loginName");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[0] = 1;
+															}
+										}
+						else if (invalidInput[0] == 1) {
+										element1 = document.getElementById("loginName");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[0] = 0;
+									}
+						if (password == null || password == "")
+							{
+											if (invalidInput[1] == 0) {
+																element1 = document.getElementById("loginPassword");
+																element1.classList.toggle("invalidBorder");
+																invalidInput[1] = 1;
+															}
+										}
+						else if (invalidInput[1] == 1) {
+										element1 = document.getElementById("loginPassword");
+										element1.classList.toggle("invalidBorder");
+										invalidInput[1] = 0;
+									}
+						return;
+					}
+		if (invalidInput[0] == 1) {
+					element1 = document.getElementById("loginName");
+					element1.classList.toggle("invalidBorder");
+					invalidInput[0] = 0;
+				}
+		if (invalidInput[1] == 1) {
+					element1 = document.getElementById("loginPassword");
+					element1.classList.toggle("invalidBorder");
+					invalidInput[1] = 0;
+				}
+
 //	var hash = md5( password );
 	
 	document.getElementById("loginResult").innerHTML = "";
@@ -349,6 +585,16 @@ function doLogin()
 				if( userId < 1 )
 				{		
 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+					if (invalidInput[0] == 0) {
+												element1 = document.getElementById("loginName");
+												element1.classList.toggle("invalidBorder");
+												invalidInput[0] = 1;
+											}
+										if (invalidInput[1] == 0) {
+																	element1 = document.getElementById("loginPassword");
+																	element1.classList.toggle("invalidBorder");
+																	invalidInput[1] = 1;
+																}
 					return;
 				}
 		
