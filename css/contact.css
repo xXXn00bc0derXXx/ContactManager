@@ -126,14 +126,14 @@ input {
 }
 
 .invalid {
-	  font-size: medium;
-	    color: #f44336;
-	      text-decoration: underline;
-      }
+  font-size: medium;
+  color: #f44336;
+  text-decoration: underline;
+}
 
-      input.invalidBorder {
-	        border: 3px solid red;
-	}
+input.invalidBorder {
+  border: 3px solid red;
+}
 
 #mobileSep {
   display: none;

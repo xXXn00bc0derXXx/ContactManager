@@ -63,18 +63,19 @@ img.avatar {
 }
 
 .invalid {
-	  font-size: medium;
-	    color: #f44336;
-	      text-decoration: underline;
-      }
+  font-size: medium;
+  color: #f44336;
+  text-decoration: underline;
+}
 
-      input.invalidBorder {
-	        border: 3px solid red;
-	}
+input.invalidBorder {
+  border: 3px solid red;
+}
 
 #cancelContainer {
   background-color: #f1f1f1;
   border: 1px solid rgb(151, 151, 151);
+  border-radius: 0px;
 }
 
 #relativePos {
