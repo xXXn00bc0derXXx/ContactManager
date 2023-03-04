@@ -13,12 +13,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="js/code.js"></script>
     <script type="text/javascript">
-	            document.addEventListener('DOMContentLoaded', function() 
-			            {
-					                readDMCookie();
-					                isDarkModeOn();
-				console.log(document.cookie);	            
-				    }, false);
+        document.addEventListener('DOMContentLoaded', function() 
+        {
+            readDMCookie();
+            isDarkModeOn();
+        }, false);
     </script>
 </head>
 
@@ -56,7 +55,21 @@
                         <button id="signupbtn" onclick="saveCookie();">Already a user? Login</button>
                     </a>
                 </div>
-		<div class="switch"> <label id="sliderLabel"> <input type="checkbox" id="darkMode" onclick="darkMode();"> <span class="slider"> <div class="darkModeIcons"> <div class="moon"> <i class="fa-solid fa-moon fa-xl"></i> </div> <div class="sun"> <i class="fa-solid fa-sun fa-lg"></i> </div> </div> </span> </label> </div>
+                <div class="switch">
+                    <label id="sliderLabel">
+                        <input type="checkbox" id="darkMode" onclick="darkMode();">
+                        <span class="slider">
+                            <div class="darkModeIcons">
+                                <div class="moon">
+                                    <i class="fa-solid fa-moon fa-xl"></i>
+                                </div>
+                                <div class="sun">
+                                    <i class="fa-solid fa-sun fa-lg"></i>
+                                </div>
+                            </div>
+                        </span>
+                    </label>
+                </div>
             </div>
             <a href="https://www.flaticon.com/free-icons/login" title="login icons" class="loginIcons">Login icons created by Freepik - Flaticon</a>
         </div>

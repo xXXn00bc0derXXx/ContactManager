@@ -20,51 +20,62 @@ function isDarkModeOn() {
 }
 function darkMode() {
 	let element1 = document.body;
-		element1.classList.toggle("dark-mode");
-		let element2;
+	element1.classList.toggle("dark-mode");
+	let element2;
 
-		var path = window.location.pathname;
-		var page = path.split("/").pop();
-		if (page == "contact.html") {
-					element2 = document.getElementById("searchText");
-					element2.classList.toggle("inputDarkMode");
-					element2 = document.getElementById("contactName");
-					element2.classList.toggle("inputDarkMode");
-					element2 = document.getElementById("contactPhone");
-					element2.classList.toggle("inputDarkMode");
-					element2 = document.getElementById("contactEmail");
-					element2.classList.toggle("inputDarkMode");
-				}
-		else if (page == "index.html") {
-					element2 = document.getElementById("loginName");
-					element2.classList.toggle("inputDarkMode");
-					element2 = document.getElementById("loginPassword");
-					element2.classList.toggle("inputDarkMode");
-				}
-		else if (page == "signUp.html") {
-						element2 = document.getElementById("firstNameSign");
-						element2.classList.toggle("inputDarkMode");
-						element2 = document.getElementById("lastNameSign");
-						element2.classList.toggle("inputDarkMode");
-						element2 = document.getElementById("loginSign");
-						element2.classList.toggle("inputDarkMode");
-						element2 = document.getElementById("loginPasswordSign");
-						element2.classList.toggle("inputDarkMode");
-					}
-			else if (page == "edit.html") {
-							element2 = document.getElementById("editName");
-							element2.classList.toggle("inputDarkMode");
-							element2 = document.getElementById("editPhone");
-							element2.classList.toggle("inputDarkMode");
-							element2 = document.getElementById("editEmail");
-							element2.classList.toggle("inputDarkMode");
-						}
-		if (darkModeOn == 0) {
-					darkModeOn = 1;
-				}
-		else if (darkModeOn == 1) {
-					darkModeOn = 0;
-				}
+	var path = window.location.pathname;
+	var page = path.split("/").pop();
+	if (page == "contact.html") {
+		element2 = document.getElementById("searchText");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("contactName");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("contactPhone");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("contactEmail");
+		element2.classList.toggle("inputDarkMode");
+	}
+	else if (page == "index.html") {
+		element2 = document.getElementById("loginName");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("loginPassword");
+		element2.classList.toggle("inputDarkMode");
+		console.log("hey");
+		element2 = document.getElementById("imgSeparator");
+		element2.classList.toggle("imgSeparatorDarkMode");
+		console.log("yo");
+		element2 = document.getElementById("cancelContainer");
+		element2.classList.toggle("cancelContainerDarkMode");
+		console.log("yuh");
+	}
+	else if (page == "signUp.html") {
+		element2 = document.getElementById("firstNameSign");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("lastNameSign");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("loginSign");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("loginPasswordSign");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("imgSeparator");
+		element2.classList.toggle("imgSeparatorDarkMode");
+		element2 = document.getElementById("cancelContainer");
+		element2.classList.toggle("cancelContainerDarkMode");
+	}
+	else if (page == "edit.html") {
+		element2 = document.getElementById("editName");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("editPhone");
+		element2.classList.toggle("inputDarkMode");
+		element2 = document.getElementById("editEmail");
+		element2.classList.toggle("inputDarkMode");
+	}
+	if (darkModeOn == 0) {
+		darkModeOn = 1;
+	}
+	else if (darkModeOn == 1) {
+		darkModeOn = 0;
+	}
 }
 
 function deleteContact(deleteParam)
@@ -158,7 +169,7 @@ function inputEditData()
 	let element1 = document.getElementById("editEmail");
 	if(tmp.length >= 3) {
 		element1.value = tmp.pop();
-        	element1 = document.getElementById("editPhone");
+        element1 = document.getElementById("editPhone");
 		element1.value = tmp.pop();
 	}
 	element1 = document.getElementById("editName");
@@ -357,29 +368,21 @@ function doLogin()
 	}
 
 }
-
-/*function saveDMCookie()
-{
-	        let minutes = 20;
-	        let date = new Date();
-	        date.setTime(date.getTime()+(minutes*60*1000));
-	        document.cookie = ",darkMode=" + darkModeOn + ";expires=" + date.toGMTString();
-}*/
 function readDMCookie()
 {
-	let data = document.cookie;
-	        let splits = data.split(",");
-	        for(var i = 0; i < splits.length; i++)
-		        {
-				                let thisOne = splits[i].trim();
-				                let tokens = thisOne.split("=");
-				                if( tokens[0] == "darkMode" )
-					                {
-								                        darkModeOn = parseInt(tokens[1].trim());
-								                }
-
-			}
+    let data = document.cookie;
+    let splits = data.split(",");
+    for(var i = 0; i < splits.length; i++)
+        {
+		let thisOne = splits[i].trim();
+		let tokens = thisOne.split("=");
+		if( tokens[0] == "darkMode" )
+		{
+			darkModeOn = parseInt(tokens[1].trim());
+		}
+	}
 }
+
 function saveCookie()
 {
 	let minutes = 20;
@@ -441,7 +444,7 @@ function doLogout()
 	darkModeOn = 0;
 	editCookie = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
- 	document.cookie = "darkMode= 0; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+	document.cookie = "darkMode= 0; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 	window.location.href = "index.html";
 }
 
