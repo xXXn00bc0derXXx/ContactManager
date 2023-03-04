@@ -16,17 +16,9 @@
         document.addEventListener('DOMContentLoaded', function() 
         {
             readCookie();
+            isDarkModeOn();
+            inputEditData();
         }, false);
-        function darkMode() {
-            let element1 = document.body;
-            element1.classList.toggle("dark-mode");
-            let element2 = document.getElementById("editName");
-            element2.classList.toggle("inputDarkMode");
-            element2 = document.getElementById("editPhone");
-            element2.classList.toggle("inputDarkMode");
-            element2 = document.getElementById("editEmail");
-            element2.classList.toggle("inputDarkMode");
-        }
     </script>
 </head>
 
@@ -39,7 +31,7 @@
         </button>
         <div class="switch">
             <label id="sliderLabel">
-                <input type="checkbox" id="darkMode" onclick="darkMode()">
+                <input type="checkbox" id="darkMode" onclick="darkMode();">
                 <span class="slider">
                     <div class="darkModeIcons">
                         <div class="moon">
@@ -60,7 +52,7 @@
     <input type="text" id="editName" placeholder="Contact Name">
     <input type="text" id="editPhone" placeholder="Contact Phone">
     <input type="text" id="editEmail" placeholder="E-mail">
-    <button type="button" id="addColorButton" class="buttons" onclick="editContact();">
+    <button type="button" id="addColorButton" class="buttons" onclick="saveCookie();editContact();">
         <i class="fa-solid fa-pen-to-square fa-lg"></i> &nbsp;Update Contact
     </button>
 </body>
