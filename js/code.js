@@ -9,6 +9,8 @@ let darkModeOn = 0;
 let editCache = [];
 let editCookie = "";
 let invalidInput = [];
+let passwordFromSignUp = "";
+let userFromSignUp = "";
 
 document.addEventListener('DOMContentLoaded', function() 
 {
@@ -37,6 +39,7 @@ function isDarkModeOn() {
 		darkModeOn = 0;
 	}
 }
+
 function darkMode() {
 	let element1 = document.body;
 	element1.classList.toggle("dark-mode");
@@ -111,6 +114,7 @@ function deleteContact(deleteParam)
 			{
 				document.getElementById("colorAddResult").innerHTML = "Color has been added";
 			}
+			searchContact();
 		};
 		xhr.send(jsonPayload);
 	}
@@ -118,8 +122,8 @@ function deleteContact(deleteParam)
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
-	document.getElementById("searchColorButton").click();
 }
+
 function editContact()
 {
 	/*  <input type="text" id="editName" placeholder="Contact Name">
@@ -257,9 +261,7 @@ function editCacheCookie(i)
 function inputEditData()
 {
 	let i = 0;
-	console.log(editCookie);
 	let tmp = editCookie.split(" ");
-	console.log(tmp);
 	while (i < tmp.length) {
 		if (tmp[i] === "") {
 			tmp.splice(i, 1);
@@ -268,7 +270,6 @@ function inputEditData()
 			++i;
 		}
 	}
-	console.log(tmp);
 	let element1 = document.getElementById("editEmail");
 	if(tmp.length >= 3) {
 		element1.value = tmp.pop();
@@ -286,6 +287,7 @@ function inputEditData()
 	}
 	element1.value = tmp2;
 }
+
 function searchContact()
 {
 	let srch = document.getElementById("searchText").value;
@@ -311,14 +313,13 @@ function searchContact()
 				let jsonObject = JSON.parse( xhr.responseText );
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					colorList += jsonObject.results[i] + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+")'>Delete</button>";
+					colorList += jsonObject.results[i] + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+");'>Delete</button>";
 					editCache[i] = jsonObject.results[i];
 					if( i < jsonObject.results.length - 1 )
 					{
 						colorList += "<br />\r\n";
 					}
 				}
-				
 				document.getElementsByTagName("p")[0].innerHTML = colorList;
 			}
 		};
@@ -440,7 +441,8 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				document.getElementById("colorAddResult").innerHTML = "Contact has been added";
+				searchContact();
 			}
 		};
 		xhr.send(jsonPayload);
@@ -449,7 +451,9 @@ function addContact()
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
+	searchContact();
 }
+
 function doSignUp(){
 	userId = 0;
 	firstName = "";
@@ -487,13 +491,11 @@ function doSignUp(){
 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 					return;
 				}
-
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 
 				saveCookie();
-
-				window.location.href = "contact.html";
+				window.location.href = "index.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -502,7 +504,62 @@ function doSignUp(){
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
+/*userFromSignUp = loginSign;
+		passwordFromSignUp = passwordSign;
+		doLoginFromSignUp();*/
 }
+
+/*function doLoginFromSignUp()
+{
+		userId = 0;
+		firstName = "";
+		lastName = "";
+
+		let login = userFromSignUp;
+		let password = passwordFromSignUp;
+		console.log(login + password);
+		document.getElementById("loginResult").innerHTML = "";
+
+		let tmp = {login:login,password:password};
+		let jsonPayload = JSON.stringify( tmp );
+		
+		let url = urlBase + 'LAMPAPI/Login.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+		try
+		{
+					xhr.onreadystatechange = function() 
+					{
+									if (this.readyState == 4 && this.status == 200) 
+										{
+															let jsonObject = JSON.parse( xhr.responseText );
+															userId = jsonObject.id;
+													
+															if( userId < 1 )
+																{	
+																						console.log("error1");																						return;
+																console.log("pass3");
+																}
+													
+															firstName = jsonObject.firstName;
+															lastName = jsonObject.lastName;
+
+															saveCookie();
+															console.log("pass2");
+															window.location.href = "contact.html";
+														}
+								};
+					xhr.send(jsonPayload);
+				}
+		catch(err)
+		{
+					console.log("error2");
+					document.getElementById("loginResult").innerHTML = err.message;
+				}
+		console.log("pass");
+}*/
 
 function doLogin()
 {
