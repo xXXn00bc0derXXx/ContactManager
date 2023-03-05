@@ -9,6 +9,8 @@ let darkModeOn = 0;
 let editCache = [];
 let editCookie = "";
 let invalidInput = [];
+let passwordFromSignUp = "";
+let userFromSignUp = "";
 
 document.addEventListener('DOMContentLoaded', function() 
 {
@@ -111,6 +113,7 @@ function deleteContact(deleteParam)
 			{
 				document.getElementById("colorAddResult").innerHTML = "Color has been added";
 			}
+			searchContact();
 		};
 		xhr.send(jsonPayload);
 	}
@@ -118,7 +121,6 @@ function deleteContact(deleteParam)
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
-	document.getElementById("searchColorButton").click();
 }
 function editContact()
 {
@@ -311,15 +313,15 @@ function searchContact()
 				let jsonObject = JSON.parse( xhr.responseText );
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					colorList += jsonObject.results[i] + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+")'>Delete</button>";
+					colorList += jsonObject.results[i] + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+");'>Delete</button>";
 					editCache[i] = jsonObject.results[i];
 					if( i < jsonObject.results.length - 1 )
 					{
 						colorList += "<br />\r\n";
 					}
 				}
-				
 				document.getElementsByTagName("p")[0].innerHTML = colorList;
+			                                console.log("2nd");
 			}
 		};
 		xhr.send(jsonPayload);
@@ -440,7 +442,9 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				console.log("1st");
+				searchContact();
+				                                console.log("1st2");
 			}
 		};
 		xhr.send(jsonPayload);
@@ -449,6 +453,7 @@ function addContact()
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
+	searchContact();
 }
 function doSignUp(){
 	userId = 0;
@@ -487,13 +492,11 @@ function doSignUp(){
 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 					return;
 				}
-
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 
 				saveCookie();
-
-				window.location.href = "contact.html";
+				window.location.href = "index.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -502,7 +505,62 @@ function doSignUp(){
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
+/*userFromSignUp = loginSign;
+		passwordFromSignUp = passwordSign;
+		doLoginFromSignUp();*/
 }
+
+/*function doLoginFromSignUp()
+{
+		userId = 0;
+		firstName = "";
+		lastName = "";
+
+		let login = userFromSignUp;
+		let password = passwordFromSignUp;
+		console.log(login + password);
+		document.getElementById("loginResult").innerHTML = "";
+
+		let tmp = {login:login,password:password};
+		let jsonPayload = JSON.stringify( tmp );
+		
+		let url = urlBase + 'LAMPAPI/Login.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+		try
+		{
+					xhr.onreadystatechange = function() 
+					{
+									if (this.readyState == 4 && this.status == 200) 
+										{
+															let jsonObject = JSON.parse( xhr.responseText );
+															userId = jsonObject.id;
+													
+															if( userId < 1 )
+																{	
+																						console.log("error1");																						return;
+																console.log("pass3");
+																}
+													
+															firstName = jsonObject.firstName;
+															lastName = jsonObject.lastName;
+
+															saveCookie();
+															console.log("pass2");
+															window.location.href = "contact.html";
+														}
+								};
+					xhr.send(jsonPayload);
+				}
+		catch(err)
+		{
+					console.log("error2");
+					document.getElementById("loginResult").innerHTML = err.message;
+				}
+		console.log("pass");
+}*/
 
 function doLogin()
 {
