@@ -36,7 +36,7 @@
             <input type="password" placeholder="Enter Password" name="loginPassword" id="loginPassword" required>
         
             <div>
-                <p id="loginResult"></p>
+                <p id="loginResult" class="invalid"></p>
             </div>
 
             <button id="loginButton" onclick="doLogin();">Login</button>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="switch">
                     <label id="sliderLabel">
-                        <input type="checkbox" id="darkMode" onclick="darkMode();">
+                        <input type="checkbox" id="darkMode" onclick="darkMode();saveCookie();">
                         <span class="slider">
                             <div class="darkModeIcons">
                                 <div class="moon">
