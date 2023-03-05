@@ -451,7 +451,6 @@ function addContact()
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
-	searchContact();
 }
 
 function doSignUp(){
@@ -464,9 +463,68 @@ function doSignUp(){
 	let loginSign = document.getElementById("loginSign").value;
 	let passwordSign = document.getElementById("loginPasswordSign").value;
 
-//	var hash = md5( password );
-	
 	document.getElementById("loginResult").innerHTML = "";
+
+	let element1;
+	if ((fName == null || fName == "") || (lName == null || lName == "") || (loginSign == null || loginSign == "") || (passwordSign == null || passwordSign == ""))
+	{
+		document.getElementById("loginResult").innerHTML = "First Name/Last Name/Username/Password cannot be empty";
+		if (fName == null || fName == "")
+		{
+			if (invalidInput[0] == 0) {
+				element1 = document.getElementById("firstNameSign");
+				element1.classList.toggle("invalidBorder");
+				invalidInput[0] = 1;
+			}
+		}
+		else if (invalidInput[0] == 1) {
+			element1 = document.getElementById("firstNameSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[0] = 0;
+		}
+		if (lName == null || lName == "")
+		{
+			if (invalidInput[1] == 0) {
+				element1 = document.getElementById("lastNameSign");
+				element1.classList.toggle("invalidBorder");
+				invalidInput[1] = 1;
+			}
+		}
+		else if (invalidInput[1] == 1) {
+			element1 = document.getElementById("lastNameSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[1] = 0;
+		}
+		if (loginSign == null || loginSign == "")
+		{
+			if (invalidInput[2] == 0) {
+				element1 = document.getElementById("loginSign");
+				element1.classList.toggle("invalidBorder");
+				invalidInput[2] = 1;
+			}
+		}
+		else if (invalidInput[2] == 1) {
+			element1 = document.getElementById("loginSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[2] = 0;
+		}
+		if (passwordSign == null || passwordSign == "")
+		{
+			if (invalidInput[3] == 0) {
+				element1 = document.getElementById("loginPasswordSign");
+				element1.classList.toggle("invalidBorder");
+				invalidInput[3] = 1;
+			}
+		}
+		else if (invalidInput[3] == 1) {
+			element1 = document.getElementById("loginPasswordSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[3] = 0;
+		}
+		return;
+	}
+
+//	var hash = md5( password );
 
 	let tmp = {fName:fName,lName:lName,login:loginSign,password:passwordSign};
 //	var tmp = {login:login,password:hash};
@@ -495,7 +553,10 @@ function doSignUp(){
 				lastName = jsonObject.lastName;
 
 				saveCookie();
-				window.location.href = "index.html";
+				
+				userFromSignUp = loginSign;
+				passwordFromSignUp = passwordSign;
+				doLoginFromSignUp();
 			}
 		};
 		xhr.send(jsonPayload);
@@ -504,62 +565,55 @@ function doSignUp(){
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
-/*userFromSignUp = loginSign;
-		passwordFromSignUp = passwordSign;
-		doLoginFromSignUp();*/
 }
 
-/*function doLoginFromSignUp()
+function doLoginFromSignUp()
 {
-		userId = 0;
-		firstName = "";
-		lastName = "";
+	userId = 0;
+	firstName = "";
+	lastName = "";
 
-		let login = userFromSignUp;
-		let password = passwordFromSignUp;
-		console.log(login + password);
-		document.getElementById("loginResult").innerHTML = "";
+	let login = userFromSignUp;
+	let password = passwordFromSignUp;
+	document.getElementById("loginResult").innerHTML = "";
 
-		let tmp = {login:login,password:password};
-		let jsonPayload = JSON.stringify( tmp );
+	let tmp = {login:login,password:password};
+	let jsonPayload = JSON.stringify( tmp );
+	
+	let url = urlBase + 'LAMPAPI/Login.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				let jsonObject = JSON.parse( xhr.responseText );
+				userId = jsonObject.id;
 		
-		let url = urlBase + 'LAMPAPI/Login.' + extension;
-
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-		try
-		{
-					xhr.onreadystatechange = function() 
-					{
-									if (this.readyState == 4 && this.status == 200) 
-										{
-															let jsonObject = JSON.parse( xhr.responseText );
-															userId = jsonObject.id;
-													
-															if( userId < 1 )
-																{	
-																						console.log("error1");																						return;
-																console.log("pass3");
-																}
-													
-															firstName = jsonObject.firstName;
-															lastName = jsonObject.lastName;
-
-															saveCookie();
-															console.log("pass2");
-															window.location.href = "contact.html";
-														}
-								};
-					xhr.send(jsonPayload);
+				if( userId < 1 )
+				{	
+					return;
 				}
-		catch(err)
-		{
-					console.log("error2");
-					document.getElementById("loginResult").innerHTML = err.message;
-				}
-		console.log("pass");
-}*/
+		
+				firstName = jsonObject.firstName;
+				lastName = jsonObject.lastName;
+
+				saveCookie();
+
+				window.location.href = "contact.html";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("loginResult").innerHTML = err.message;
+	}
+}
 
 function doLogin()
 {
@@ -601,16 +655,6 @@ function doLogin()
 			invalidInput[1] = 0;
 		}
 		return;
-	}
-	if (invalidInput[0] == 1) {
-		element1 = document.getElementById("loginName");
-		element1.classList.toggle("invalidBorder");
-		invalidInput[0] = 0;
-	}
-	if (invalidInput[1] == 1) {
-		element1 = document.getElementById("loginPassword");
-		element1.classList.toggle("invalidBorder");
-		invalidInput[1] = 0;
 	}
 
 //	var hash = md5( password );
@@ -740,10 +784,9 @@ function doLogout()
 	userId = 0;
 	firstName = "";
 	lastName = "";
-	darkModeOn = 0;
 	editCookie = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-	document.cookie = "darkMode= 0; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+	saveCookie();
 	window.location.href = "index.html";
 }
 
