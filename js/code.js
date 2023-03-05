@@ -39,6 +39,7 @@ function isDarkModeOn() {
 		darkModeOn = 0;
 	}
 }
+
 function darkMode() {
 	let element1 = document.body;
 	element1.classList.toggle("dark-mode");
@@ -122,6 +123,7 @@ function deleteContact(deleteParam)
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
 }
+
 function editContact()
 {
 	/*  <input type="text" id="editName" placeholder="Contact Name">
@@ -259,9 +261,7 @@ function editCacheCookie(i)
 function inputEditData()
 {
 	let i = 0;
-	console.log(editCookie);
 	let tmp = editCookie.split(" ");
-	console.log(tmp);
 	while (i < tmp.length) {
 		if (tmp[i] === "") {
 			tmp.splice(i, 1);
@@ -270,7 +270,6 @@ function inputEditData()
 			++i;
 		}
 	}
-	console.log(tmp);
 	let element1 = document.getElementById("editEmail");
 	if(tmp.length >= 3) {
 		element1.value = tmp.pop();
@@ -288,6 +287,7 @@ function inputEditData()
 	}
 	element1.value = tmp2;
 }
+
 function searchContact()
 {
 	let srch = document.getElementById("searchText").value;
@@ -321,7 +321,6 @@ function searchContact()
 					}
 				}
 				document.getElementsByTagName("p")[0].innerHTML = colorList;
-			                                console.log("2nd");
 			}
 		};
 		xhr.send(jsonPayload);
@@ -442,9 +441,8 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				console.log("1st");
+				document.getElementById("colorAddResult").innerHTML = "Contact has been added";
 				searchContact();
-				                                console.log("1st2");
 			}
 		};
 		xhr.send(jsonPayload);
@@ -455,6 +453,7 @@ function addContact()
 	}
 	searchContact();
 }
+
 function doSignUp(){
 	userId = 0;
 	firstName = "";
