@@ -15,6 +15,8 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() 
         {
+            page[2] = 1;
+            checkInputs();
             readCookie();
             isDarkModeOn();
             searchContact();
@@ -67,7 +69,8 @@
                 <i class="fa-solid fa-user-plus fa-lg"></i> &nbsp;Add Contact
             </button><br>
         </div>
-        <span id="colorAddResult"></span>
+        <span id="colorAddResult" class="invalid"></span>
+        <span id="colorAddResultSuccess"></span>
     </div> 
 </body>
 
