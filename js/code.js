@@ -1,5 +1,5 @@
-//const urlBase = 'http://159.223.96.127/'; evans website
-const urlBase = 'https://contact-manager-cop4331-2023.xyz/'; // lances website
+const urlBase = 'http://159.223.96.127/'; evans website
+// const urlBase = 'https://contact-manager-cop4331-2023.xyz/'; // lances website
 const extension = 'php';
 
 let userId = 0;
@@ -12,24 +12,23 @@ let editCookie = "";
 let invalidInput = [];
 let passwordFromSignUp = "";
 let userFromSignUp = "";
+let page = [0, 0, 0, 0]; // Login, signup contact, and edit.
 
-document.addEventListener('DOMContentLoaded', function() 
+function checkInputs()
 {
-	var path = window.location.pathname;
-	var page = path.split("/").pop();
-	if (page == "contact.html") {
-		invalidInput = [0, 0, 0];
-	}
-	else if (page == "index.html") {
+	if (page[0] == 1) {
 		invalidInput = [0, 0];
 	}
-	else if (page == "signUp.html") {
+	else if (page[1] == 1) {
 		invalidInput = [0, 0, 0, 0];
 	}
-	else if (page == "edit.html") {
+	else if (page[2] == 1) {
 		invalidInput = [0, 0, 0];
 	}
-});
+	else if (page[3] == 1) {
+		invalidInput = [0, 0, 0];
+	}
+}
 
 function isDarkModeOn() {
 	if (darkModeOn == 1) {
@@ -46,9 +45,7 @@ function darkMode() {
 	element1.classList.toggle("dark-mode");
 	let element2;
 
-	var path = window.location.pathname;
-	var page = path.split("/").pop();
-	if (page == "contact.html") {
+	if (page[2] == 1) {
 		element2 = document.getElementById("searchText");
 		element2.classList.toggle("inputDarkMode");
 		element2 = document.getElementById("contactName");
@@ -58,7 +55,7 @@ function darkMode() {
 		element2 = document.getElementById("contactEmail");
 		element2.classList.toggle("inputDarkMode");
 	}
-	else if (page == "index.html") {
+	else if (page[0] == 1) {
 		element2 = document.getElementById("loginName");
 		element2.classList.toggle("inputDarkMode");
 		element2 = document.getElementById("loginPassword");
@@ -68,7 +65,7 @@ function darkMode() {
 		element2 = document.getElementById("cancelContainer");
 		element2.classList.toggle("cancelContainerDarkMode");
 	}
-	else if (page == "signUp.html") {
+	else if (page[1] == 1) {
 		element2 = document.getElementById("firstNameSign");
 		element2.classList.toggle("inputDarkMode");
 		element2 = document.getElementById("lastNameSign");
@@ -82,7 +79,7 @@ function darkMode() {
 		element2 = document.getElementById("cancelContainer");
 		element2.classList.toggle("cancelContainerDarkMode");
 	}
-	else if (page == "edit.html") {
+	else if (page[3] == 1) {
 		element2 = document.getElementById("editName");
 		element2.classList.toggle("inputDarkMode");
 		element2 = document.getElementById("editPhone");
@@ -310,19 +307,28 @@ function searchContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
+				document.getElementById("colorSearchResult").innerHTML = "Contact(s) has been retrieved";
 				let jsonObject = JSON.parse( xhr.responseText );
-				for( let i=0; i<jsonObject.results.length; i++ )
+				if (jsonObject.error == "No Records Found") {
+					document.getElementById("colorSearchResult").innerHTML = "No contact found";
+				}
+				for(let i = 0; i<jsonObject.results.length; i++ )
 				{
-					colorList += jsonObject.results[i] + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+");'>Delete</button>";
-					editCache[i] = jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
+					if (i == 0)
 					{
-						colorList += "<br />\r\n";
+						colorList += "<hr class='contactSeparator'>";
 					}
+					colorList += "<div id='contactBackground' class='contactBackground'>" + jsonObject.results[i] + "</div>" + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+");'>Delete</button>";
+					if (i + 1 < jsonObject.results.length)
+					{
+						colorList += "<hr class='contactSeparator'>";
+					}
+					editCache[i] = jsonObject.results[i];
 				}
 				document.getElementsByTagName("p")[0].innerHTML = colorList;
 			}
+			const elements = document.querySelectorAll('.contactBackground');
+			elements.forEach(x => x.classList.toggle('contactBackgroundDarkMode'));
 		};
 		xhr.send(jsonPayload);
 	}
@@ -341,6 +347,7 @@ function addContact()
 	let newPhone = document.getElementById("contactPhone").value;
 	let newEmail = document.getElementById("contactEmail").value;
 	document.getElementById("colorAddResult").innerHTML = "";
+	document.getElementById("colorAddResultSuccess").innerHTML = "";
 
 	let element1;
 	if ((newName == null || newName == "") || (newPhone == null || newPhone == "") || (newEmail == null || newEmail == ""))
@@ -442,7 +449,7 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("colorAddResult").innerHTML = "Contact has been added";
+				document.getElementById("colorAddResultSuccess").innerHTML = "Contact has been added";
 				searchContact();
 			}
 		};
