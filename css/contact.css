@@ -100,11 +100,6 @@ input:checked + .slider:before {
 .inputDarkMode {
   color: black;
 }
-
-.contactBackgroundDarkMode {
-	  background-color: #596970;
-	    color: black;
-    }
 /*end of darkmode slider*/
 
 #logoutButton {
@@ -150,26 +145,6 @@ input.invalidBorder {
   margin-top: 93px;
   margin-bottom: 5px;
 }
-
-.contactSeparator {
-	  background-color:#596970;
-	     height: 2px; 
-	  margin-top: 5px;
-	        margin-bottom: 5px;
-	}
-
-	.contactBackground {
-		  background-color: #c4ffff;
-		  max-width: 800px;
-		  width: 100%;	
-      		  display: inline-block;
-	  	padding: 10px 15px;
-	      font-size: 16px;	
-	  }
-
-	    #contactButtons {
-		      display: inline-block;
-	      }
 
 @media screen and (max-width: 484px) {
   #mobileSep {
