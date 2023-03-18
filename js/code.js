@@ -1,4 +1,4 @@
-const urlBase = 'http://159.223.96.127/'; evans website
+const urlBase = 'http://159.223.96.127/'; //evans website
 // const urlBase = 'https://contact-manager-cop4331-2023.xyz/'; // lances website
 const extension = 'php';
 
@@ -128,6 +128,8 @@ function editContact()
     	<input type="text" id="editPhone" placeholder="Contact Phone">
     	<input type="text" id="editEmail" placeholder="E-mail"> 
 	*/
+	readCookie();
+	console.log(changeUserID);
 	let eName = document.getElementById("editName").value;
 	let ePhone = document.getElementById("editPhone").value;
 	let eEmail = document.getElementById("editEmail").value;
@@ -217,7 +219,7 @@ function editContact()
 		return;
 	}
 
-	changeUserID = Number(localStorage.getItem("cId"));
+	//changeUserID = Number(localStorage.getItem("cId"));
 	let tmp = {cUserID:changeUserID, userId:userId, editName:eName, editPhone:ePhone,editEmail:eEmail};
 
 	let jsonPayload = JSON.stringify(tmp);
@@ -236,7 +238,7 @@ function editContact()
 				//document.getElementById("colorAddResult").innerHTML = "Color has been added";
 			}
 		};
-		window.location.href ="contact.html";
+		//window.location.href ="contact.html";
 		xhr.send(jsonPayload);
 		//window.location.href= "contact.html";
 	}
@@ -245,11 +247,14 @@ function editContact()
 		document.getElementById("colorAddResult").innerHTML = err.message;
 		window.location.href = "contact.html";
 	}
+	window.open("contact.html");
 }
 function goToEdit(updateParam)
 {
+	changeUserID = updateParam;
+	saveCookie();
 	window.location.href = "edit.html";
-	localStorage.setItem("cId", JSON.stringify(updateParam));
+	//localStorage.setItem("cId", JSON.stringify(updateParam));
 }
 function editCacheCookie(i)
 {
@@ -318,7 +323,7 @@ function searchContact()
 					{
 						colorList += "<hr class='contactSeparator'>";
 					}
-					colorList += "<div id='contactBackground' class='contactBackground'>" + jsonObject.results[i] + "</div>" + " <button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+");'>Delete</button>";
+					colorList += "<div id='contactBackground' class='contactBackground'>" + jsonObject.results[i] + "</div>" + " <div id='contactButtons'><button type='button' onclick = 'editCacheCookie("+Number(i)+");goToEdit("+Number(jsonObject.id[i])+");'>Edit</button> <button type='button' onclick = 'deleteContact("+Number(jsonObject.id[i])+");'>Delete</button></div>";
 					if (i + 1 < jsonObject.results.length)
 					{
 						colorList += "<hr class='contactSeparator'>";
@@ -771,11 +776,11 @@ function readCookie()
 		{
 			editCookie = tokens[1];
 		}
-		/*else if(tokens[0] == "changeUserID")
+		else if(tokens[0] == "changeUserID")
 		{
 			changeUserID = parseInt( tokens[1].trim() );
 		}
-		*/
+		
 	}
 	if( userId < 0 )
 	{
