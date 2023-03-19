@@ -1,5 +1,5 @@
-// const urlBase = 'http://159.223.96.127/'; //evans website
-const urlBase = 'https://contact-manager-cop4331-2023.xyz/'; // lances website
+const urlBase = 'http://159.223.96.127/'; //evans website
+// const urlBase = 'https://contact-manager-cop4331-2023.xyz/'; // lances website
 const extension = 'php';
 
 let userId = 0;
@@ -110,7 +110,7 @@ function deleteContact(deleteParam)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("colorAddResultSuccess").innerHTML = "Color has been deleted";
+				document.getElementById("colorAddResultSuccess").innerHTML = "Contact has been deleted";
 			}
 			searchContact();
 		};
@@ -365,6 +365,11 @@ function addContact()
 		}
 		return;
 	}
+	if (invalidInput[0] == 1) {
+		element1 = document.getElementById("contactName");
+		element1.classList.toggle("invalidBorder");
+		invalidInput[0] = 0;
+	}
 	if (/^\s/.test(newPhone) || /\s$/.test(newPhone))
 	{
 		document.getElementById("colorAddResult").innerHTML = "Phone # cannot start or end with a space";
@@ -374,6 +379,11 @@ function addContact()
 			invalidInput[1] = 1;
 		}
 		return;
+	}
+	if (invalidInput[1] == 1) {
+		element1 = document.getElementById("contactPhone");
+		element1.classList.toggle("invalidBorder");
+		invalidInput[1] = 0;
 	}
 
 	if ((newName == null || newName == "") || (newPhone == null || newPhone == "") || (newEmail == null || newEmail == ""))
@@ -500,6 +510,67 @@ function doSignUp(){
 	document.getElementById("loginResult").innerHTML = "";
 
 	let element1;
+	if (/^\s/.test(fName) || /\s$/.test(fName))
+	{
+		document.getElementById("loginResult").innerHTML = "First name cannot start or end with a space";
+		if (invalidInput[0] == 0) {
+			element1 = document.getElementById("firstNameSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[0] = 1;
+		}
+		return;
+	}
+	if (invalidInput[0] == 1) {
+		element1 = document.getElementById("firstNameSign");
+		element1.classList.toggle("invalidBorder");
+		invalidInput[0] = 0;
+	}
+	if (/^\s/.test(lName) || /\s$/.test(lName))
+	{
+		document.getElementById("loginResult").innerHTML = "Last name cannot start or end with a space";
+		if (invalidInput[1] == 0) {
+			element1 = document.getElementById("lastNameSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[1] = 1;
+		}
+		return;
+	}
+	if (invalidInput[1] == 1) {
+		element1 = document.getElementById("lastNameSign");
+		element1.classList.toggle("invalidBorder");
+		invalidInput[1] = 0;
+	}
+	if (/^\s/.test(loginSign) || /\s$/.test(loginSign))
+	{
+		document.getElementById("loginResult").innerHTML = "Username name cannot start or end with a space";
+		if (invalidInput[2] == 0) {
+			element1 = document.getElementById("loginSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[2] = 1;
+		}
+		return;
+	}
+	if (invalidInput[2] == 1) {
+		element1 = document.getElementById("loginSign");
+		element1.classList.toggle("invalidBorder");
+		invalidInput[2] = 0;
+	}
+	if (/^\s/.test(passwordSign) || /\s$/.test(passwordSign))
+	{
+		document.getElementById("loginResult").innerHTML = "Password cannot start or end with a space";
+		if (invalidInput[3] == 0) {
+			element1 = document.getElementById("loginPasswordSign");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[3] = 1;
+		}
+		return;
+	}
+	if (invalidInput[3] == 1) {
+		element1 = document.getElementById("loginPasswordSign");
+		element1.classList.toggle("invalidBorder");
+		invalidInput[3] = 0;
+	}
+
 	if ((fName == null || fName == "") || (lName == null || lName == "") || (loginSign == null || loginSign == "") || (passwordSign == null || passwordSign == ""))
 	{
 		document.getElementById("loginResult").innerHTML = "First Name/Last Name/Username/Password cannot be empty";
