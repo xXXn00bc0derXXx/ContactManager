@@ -13,7 +13,10 @@ let invalidInput = [];
 let passwordFromSignUp = "";
 let userFromSignUp = "";
 let page = [0, 0, 0, 0]; // Login, signup contact, and edit.
-
+function goHome()
+{
+	window.location.href="contact.html";
+}
 function checkInputs()
 {
 	if (page[0] == 1) {
@@ -235,7 +238,7 @@ function editContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				//document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				document.getElementById("colorAddResult").innerHTML = "Contact has been updated";
 			}
 		};
 		//window.location.href ="contact.html";
@@ -247,7 +250,7 @@ function editContact()
 		document.getElementById("colorAddResult").innerHTML = err.message;
 		window.location.href = "contact.html";
 	}
-	window.open("contact.html");
+	//window.open("contact.html");
 }
 function goToEdit(updateParam)
 {
