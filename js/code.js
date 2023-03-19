@@ -1,5 +1,5 @@
-const urlBase = 'http://159.223.96.127/'; //evans website
-// const urlBase = 'https://contact-manager-cop4331-2023.xyz/'; // lances website
+// const urlBase = 'http://159.223.96.127/'; //evans website
+const urlBase = 'https://contact-manager-cop4331-2023.xyz/'; // lances website
 const extension = 'php';
 
 let userId = 0;
@@ -110,7 +110,7 @@ function deleteContact(deleteParam)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				document.getElementById("colorAddResultSuccess").innerHTML = "Color has been deleted";
 			}
 			searchContact();
 		};
@@ -355,6 +355,27 @@ function addContact()
 	document.getElementById("colorAddResultSuccess").innerHTML = "";
 
 	let element1;
+	if (/^\s/.test(newName) || /\s$/.test(newName))
+	{
+		document.getElementById("colorAddResult").innerHTML = "Name cannot start or end with a space";
+		if (invalidInput[0] == 0) {
+			element1 = document.getElementById("contactName");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[0] = 1;
+		}
+		return;
+	}
+	if (/^\s/.test(newPhone) || /\s$/.test(newPhone))
+	{
+		document.getElementById("colorAddResult").innerHTML = "Phone # cannot start or end with a space";
+		if (invalidInput[1] == 0) {
+			element1 = document.getElementById("contactPhone");
+			element1.classList.toggle("invalidBorder");
+			invalidInput[1] = 1;
+		}
+		return;
+	}
+
 	if ((newName == null || newName == "") || (newPhone == null || newPhone == "") || (newEmail == null || newEmail == ""))
 	{
 		document.getElementById("colorAddResult").innerHTML = "Name/Phone/Email cannot be empty";
